@@ -36,17 +36,27 @@ export const SEEDREAM_QUALITY_OPTIONS = [
 ]
 
 export const BANANA_SIZE_OPTIONS = [
-    { label: '16:9', key: '16x9' },
-    { label: '4:3', key: '4x3' },
-    { label: '3:2', key: '3x2' },
-    { label: '1:1', key: '1x1' },
-    { label: '2:3', key: '2x3' },
-    { label: '3:4', key: '3x4' },
-    { label: '9:16', key: '9x16' },
+    { label: '1920:1080', key: '1920x1080' },
+    { label: '1024:768', key: '1024x768' },
+    { label: '1024:1024', key: '1024x1024' },
+    { label: '512:512', key: '512x512' },
 ]
 
 // Image generation models | 图片生成模型
 export const IMAGE_MODELS = [
+    {
+        label: 'agnes-image-2.0-flash',
+        key: 'agnes-image-2.0-flash',
+        provider: ['agnes'], // AgnesAi渠道
+        sizes: BANANA_SIZE_OPTIONS.map(s => s.key),
+        // qualities: SEEDREAM_QUALITY_OPTIONS,
+        // getSizesByQuality: (quality) => quality === '4k' ? SEEDREAM_4K_SIZE_OPTIONS : SEEDREAM_SIZE_OPTIONS,
+        defaultParams: {
+            size: '1920x1080',
+            quality: 'standard',
+            style: 'vivid'
+        }
+    },
     {
         label: 'agnes-image-2.1-flash',
         key: 'agnes-image-2.1-flash',
@@ -55,7 +65,7 @@ export const IMAGE_MODELS = [
         // qualities: SEEDREAM_QUALITY_OPTIONS,
         // getSizesByQuality: (quality) => quality === '4k' ? SEEDREAM_4K_SIZE_OPTIONS : SEEDREAM_SIZE_OPTIONS,
         defaultParams: {
-            size: '1x1',
+            size: '1920x1080',
             quality: 'standard',
             style: 'vivid'
         }
@@ -68,7 +78,7 @@ export const IMAGE_MODELS = [
         // qualities: SEEDREAM_QUALITY_OPTIONS,
         // getSizesByQuality: (quality) => quality === '4k' ? SEEDREAM_4K_SIZE_OPTIONS : SEEDREAM_SIZE_OPTIONS,
         defaultParams: {
-            size: '1x1',
+            size: '1920x1080',
             quality: 'standard',
             style: 'vivid'
         }
@@ -81,7 +91,7 @@ export const IMAGE_MODELS = [
         // qualities: SEEDREAM_QUALITY_OPTIONS,
         // getSizesByQuality: (quality) => quality === '4k' ? SEEDREAM_4K_SIZE_OPTIONS : SEEDREAM_SIZE_OPTIONS,
         defaultParams: {
-            size: '1x1',
+            size: '1920x1080',
             quality: 'standard',
             style: 'vivid'
         }
@@ -131,7 +141,7 @@ export const SEEDANCE_RESOLUTION_OPTIONS = [
 
 // Video generation models | 视频生成模型
 export const VIDEO_MODELS = [
-     // AgnesAi 模型
+    // AgnesAi 模型
     {
         label: 'agnes-video-v2.0 (图文视频)',
         key: 'agnes-video-v2.0',
@@ -143,7 +153,7 @@ export const VIDEO_MODELS = [
         defaultResolution: '1080p',
         defaultParams: { ratio: '16:9', duration: 10, resolution: '1080p' }
     },
-     // Seedance 模型 - 1.5 Pro
+    // Seedance 模型 - 1.5 Pro
     {
         label: 'Seedance 1.5 Pro (图文视频)',
         key: 'doubao-seedance-1-5-pro-251215',
@@ -191,7 +201,7 @@ export const VIDEO_MODELS = [
         defaultResolution: '1080p',
         defaultParams: { ratio: '16:9', duration: 5, resolution: '1080p' }
     },
-   
+
     // Seedance 模型 - 1.0 Pro Fast
     {
         label: 'Seedance 1.0 Pro Fast (图文视频)',

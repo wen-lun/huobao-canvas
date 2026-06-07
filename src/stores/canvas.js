@@ -243,7 +243,7 @@ const getDefaultNodeData = (type) => {
       return {
         prompt: '',
         model: DEFAULT_IMAGE_MODEL,
-        size: imageModel?.defaultParams?.size || '1x1',
+        size: imageModel?.defaultParams?.size || '1920x1080',
         quality: imageModel?.defaultParams?.quality || 'standard',
         label: '文生图'
       }

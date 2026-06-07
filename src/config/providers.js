@@ -196,11 +196,13 @@ export const PROVIDERS = {
           model: params.model,
           prompt: params.prompt
         }
-        if (params.size) adapted.size = params.size?.replace('x', '*')
+        if (params.size) adapted.size = params.size//?.replace('x', '*')
         if (params.n) adapted.n = params.n
         if (params.quality) adapted.quality = params.quality
         if (params.style) adapted.style = params.style
-        if (params.image) adapted.image = params.image
+        if (params.image?.length) {
+          adapted.extra_body = { image: params.image }
+        }
         return adapted
       },
       video: (params) => {
@@ -239,7 +241,7 @@ export const PROVIDERS = {
     }
   },
 
-  
+
 
   // 默认使用 OpenAI 格式
   default: 'chatfire'
