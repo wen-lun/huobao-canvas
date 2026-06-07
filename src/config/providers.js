@@ -168,9 +168,9 @@ export const PROVIDERS = {
       }
     }
   },
-  openai: {
-    label: 'OpenAI',
-    defaultBaseUrl: 'https://api.chatfire.cn',
+  agnes: {
+    label: 'AgnesAi',
+    defaultBaseUrl: 'https://apihub.agnes-ai.com',
     // 端点路径
     endpoints: {
       chat: '/v1/chat/completions',
@@ -196,7 +196,7 @@ export const PROVIDERS = {
           model: params.model,
           prompt: params.prompt
         }
-        if (params.size) adapted.size = params.size
+        if (params.size) adapted.size = params.size?.replace('x', '*')
         if (params.n) adapted.n = params.n
         if (params.quality) adapted.quality = params.quality
         if (params.style) adapted.style = params.style

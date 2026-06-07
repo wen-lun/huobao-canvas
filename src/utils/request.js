@@ -4,6 +4,7 @@
  */
 
 import axios from 'axios'
+import { getApiKey } from './token'
 
 // Base URL from environment or default
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.chatfire.site'
@@ -17,18 +18,8 @@ const instance = axios.create({
 // Request interceptor | 请求拦截器
 instance.interceptors.request.use(
   (config) => {
-    // Get current provider | 获取当前渠道
-    const currentProvider = localStorage.getItem('api-provider') || 'chatfire'
-
     // Get API keys from new storage | 从新存储结构获取 API Keys
-    let apiKey = ''
-    try {
-      const apiKeysJson = localStorage.getItem('api-keys-by-provider')
-      const apiKeys = apiKeysJson ? JSON.parse(apiKeysJson) : {}
-      apiKey = apiKeys[currentProvider] || ''
-    } catch (e) {
-      apiKey = ''
-    }
+    let apiKey = getApiKey()
 
     // Skip auth for certain endpoints | 跳过某些端点的认证
     const noAuthEndpoints = ['/model/page', '/model/fullName', '/model/types']
@@ -50,33 +41,33 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (res) => {
     const { data, code, message } = res.data || {}
-    
+
     // Handle stream response | 处理流响应
     if (res.config.responseType === 'stream') {
       return res.data
     }
-    
+
     // Handle blob response | 处理 blob 响应
     if (res.data instanceof Blob) {
       return res.data
     }
-    
+
     // Success response | 成功响应
     if (code === 200 || res.status === 200) {
       return res.data
     }
-    
+
     // Error response | 错误响应
     window.$message?.error(message || 'Request failed')
     return Promise.reject(res.data)
   },
   (error) => {
     const { response } = error
-    
+
     if (response) {
       const { status, data } = response
       const message = data?.message || data?.error?.message || error.message
-      
+
       if (status === 401) {
         window.$message?.error('API Key 无效或已过期')
       } else if (status === 429) {
@@ -87,7 +78,7 @@ instance.interceptors.response.use(
     } else {
       window.$message?.error(error.message || '网络错误')
     }
-    
+
     return Promise.reject(error)
   }
 )

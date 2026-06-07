@@ -117,7 +117,7 @@ const isApiConfigured = computed(() => !!modelStore.currentApiKey)
 // Chat hook for polish | 润色用的 Chat hook
 const { send: sendChat } = useChat({
   systemPrompt: '你是一个专业的AI绘画提示词专家。将用户输入的内容美化成高质量的生图提示词，包含风格、光线、構图、细节等要素。直接返回提示词，不要其他解释。',
-  model: 'gpt-4o-mini'
+  model: 'agnes-2.0-flash'
 })
 
 // Local content state | 本地内容状态

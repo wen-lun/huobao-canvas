@@ -91,7 +91,7 @@ export const useChat = (options = {}) => {
 
       // 适配请求参数
       const adaptedParams = adaptRequest('chat', {
-        model: options.model || 'gpt-4o-mini',
+        model: options.model || 'agnes-2.0-flash',
         messages: msgList
       })
 

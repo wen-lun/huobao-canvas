@@ -1101,7 +1101,7 @@ export const WORKFLOW_TEMPLATES = [
 3. 使用绘本水彩风格描述
 4. 末尾加上"白色简洁背景，儿童绘本水彩风格，温馨治愈，色彩明亮柔和"
 5. 直接输出，不要编号、标题或其他格式标记`,
-          model: 'gpt-4o-mini',
+          model: 'agnes-2.0-flash',
           outputFormat: 'text'
         }
       })

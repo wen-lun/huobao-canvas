@@ -48,6 +48,19 @@ export const BANANA_SIZE_OPTIONS = [
 // Image generation models | 图片生成模型
 export const IMAGE_MODELS = [
     {
+        label: 'agnes-image-2.1-flash',
+        key: 'agnes-image-2.1-flash',
+        provider: ['agnes'], // AgnesAi渠道
+        sizes: BANANA_SIZE_OPTIONS.map(s => s.key),
+        // qualities: SEEDREAM_QUALITY_OPTIONS,
+        // getSizesByQuality: (quality) => quality === '4k' ? SEEDREAM_4K_SIZE_OPTIONS : SEEDREAM_SIZE_OPTIONS,
+        defaultParams: {
+            size: '1x1',
+            quality: 'standard',
+            style: 'vivid'
+        }
+    },
+    {
         label: 'Nano Banana 2',
         key: 'nano-banana-2',
         provider: ['chatfire'], // 火宝渠道
@@ -118,6 +131,18 @@ export const SEEDANCE_RESOLUTION_OPTIONS = [
 
 // Video generation models | 视频生成模型
 export const VIDEO_MODELS = [
+     // AgnesAi 模型
+    {
+        label: 'agnes-video-v2.0 (图文视频)',
+        key: 'agnes-video-v2.0',
+        provider: ['agnes'],
+        type: 't2v+i2v',
+        ratios: ['16:9', '4:3', '1:1', '3:4', '9:16', '21:9'],
+        durs: [{ label: '5 秒', key: 5 }, { label: '10 秒', key: 10 }],
+        resolutions: ['480p', '720p', '1080p'],
+        defaultResolution: '1080p',
+        defaultParams: { ratio: '16:9', duration: 10, resolution: '1080p' }
+    },
      // Seedance 模型 - 1.5 Pro
     {
         label: 'Seedance 1.5 Pro (图文视频)',
@@ -218,6 +243,7 @@ export const VIDEO_MODELS = [
 
 // Chat/LLM models | 对话模型
 export const CHAT_MODELS = [
+    { label: 'agnes-2.0-flash', key: 'agnes-2.0-flash', provider: ['agnes'] },
     { label: 'GPT-4o Mini', key: 'gpt-4o-mini', provider: ['openai'] },
     { label: 'GPT-4o', key: 'gpt-4o', provider: ['openai'] },
     { label: 'GPT-5.2', key: 'gpt-5.2', provider: ['openai'] },
@@ -255,9 +281,9 @@ export const VIDEO_DURATION_OPTIONS = [
 ]
 
 // Default values | 默认值
-export const DEFAULT_IMAGE_MODEL = 'nano-banana-pro'
-export const DEFAULT_VIDEO_MODEL = 'doubao-seedance-1-5-pro-251215'
-export const DEFAULT_CHAT_MODEL = 'gpt-4o-mini'
+export const DEFAULT_IMAGE_MODEL = 'agnes-image-2.1-flash'
+export const DEFAULT_VIDEO_MODEL = 'agnes-video-v2.0'
+export const DEFAULT_CHAT_MODEL = 'agnes-2.0-flash'
 export const DEFAULT_IMAGE_SIZE = '2048x2048'
 export const DEFAULT_VIDEO_RATIO = '16:9'
 export const DEFAULT_VIDEO_DURATION = 5

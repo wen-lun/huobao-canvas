@@ -12,6 +12,7 @@ export default defineConfig({
     }
   },
   server: {
+    port: 5174,
     proxy: {
       '/v1': {
         target: 'https://api.chatfire.site',
