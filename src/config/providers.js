@@ -196,7 +196,12 @@ export const PROVIDERS = {
           model: params.model,
           prompt: params.prompt
         }
-        if (params.size) adapted.size = params.size//?.replace('x', '*')
+        if (params.size) {
+          let size = params.size;
+          // 额，没有参考图的情况，size是w*h，否则是wxh
+          if (!params.image?.length) size = size.replace('x', '*')
+          adapted.size = size
+        }
         if (params.n) adapted.n = params.n
         if (params.quality) adapted.quality = params.quality
         if (params.style) adapted.style = params.style
