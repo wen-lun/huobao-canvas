@@ -176,7 +176,7 @@ export const PROVIDERS = {
       chat: '/v1/chat/completions',
       image: '/v1/images/generations',
       video: '/v1/videos',
-      videoQuery: '/v1/videos/{taskId}'
+      videoQuery: '/agnesapi?video_id={taskId}'
     },
     // 请求参数适配
     requestAdapter: {
@@ -215,10 +215,45 @@ export const PROVIDERS = {
           model: params.model,
           prompt: params.prompt || ''
         }
-        if (params.first_frame_image) adapted.first_frame_image = params.first_frame_image
-        if (params.last_frame_image) adapted.last_frame_image = params.last_frame_image
-        if (params.size) adapted.size = params.size
-        if (params.seconds) adapted.seconds = params.seconds
+        if (params.images?.length) {
+          adapted.extra_body = { image: params.images }
+        } else {
+          const images = []
+          if (params.first_frame_image) images.push(params.first_frame_image)
+          if (params.last_frame_image) images.push(params.last_frame_image)
+          if (images.length) {
+            adapted.extra_body = { image: images, mode: 'keyframes' }
+          }
+        }
+        // 尺寸：ratio → width/height
+        if (params.size) {
+          const ratioMap = {
+            '16:9': { width: 1152, height: 768 },
+            '4:3': { width: 1024, height: 768 },
+            '1:1': { width: 768, height: 768 },
+            '3:4': { width: 768, height: 1024 },
+            '9:16': { width: 768, height: 1152 },
+            '21:9': { width: 1344, height: 576 }
+          }
+          const sizeConfig = ratioMap[params.size]
+          if (sizeConfig) {
+            adapted.width = sizeConfig.width
+            adapted.height = sizeConfig.height
+          }
+        }
+        if (params.width) adapted.width = params.width
+        if (params.height) adapted.height = params.height
+        // 时长：seconds → num_frames/frame_rate
+        if (params.seconds) {
+          adapted.frame_rate = 24
+          const secondsMap = { 3: 81, 5: 121, 10: 241, 18: 441 }
+          adapted.num_frames = secondsMap[params.seconds] || 121
+        }
+        if (params.num_frames) adapted.num_frames = params.num_frames
+        if (params.frame_rate) adapted.frame_rate = params.frame_rate
+        // 其他可选参数
+        if (params.negative_prompt) adapted.negative_prompt = params.negative_prompt
+        if (params.mode) adapted.mode = params.mode
         return adapted
       }
     },
@@ -239,7 +274,7 @@ export const PROVIDERS = {
       },
       video: (response) => {
         return {
-          url: response.data?.url || response.url || response.data?.[0]?.url || '',
+          url: response.remixed_from_video_id || response.data?.url || response.url || response.data?.[0]?.url || '',
           ...response
         }
       }

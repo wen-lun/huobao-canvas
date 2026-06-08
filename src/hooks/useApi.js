@@ -238,6 +238,7 @@ export const useVideoGeneration = () => {
     // Add optional params | 添加可选参数
     if (params.first_frame_image) requestData.first_frame_image = params.first_frame_image
     if (params.last_frame_image) requestData.last_frame_image = params.last_frame_image
+    if (params.images?.length) requestData.images = params.images
     if (params.ratio) requestData.size = params.ratio
     if (params.dur) requestData.seconds = params.dur
 
@@ -261,8 +262,8 @@ export const useVideoGeneration = () => {
       }
     }
 
-    // Get task ID | 获取任务 ID
-    const newTaskId = task.id || task.task_id || task.taskId
+    // Get task ID | 获取任务 ID（优先使用 video_id，兼容新 API 推荐查询方式）
+    const newTaskId = task.video_id || task.id || task.task_id || task.taskId
     if (!newTaskId) {
       throw new Error('未获取到任务 ID')
     }
