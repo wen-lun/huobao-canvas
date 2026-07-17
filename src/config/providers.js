@@ -197,10 +197,7 @@ export const PROVIDERS = {
           prompt: params.prompt
         }
         if (params.size) {
-          let size = params.size;
-          // 额，没有参考图的情况，size是w*h，否则是wxh
-          if (!params.image?.length) size = size.replace('x', '*')
-          adapted.size = size
+          adapted.size = '1K'
         }
         if (params.n) adapted.n = params.n
         if (params.quality) adapted.quality = params.quality
